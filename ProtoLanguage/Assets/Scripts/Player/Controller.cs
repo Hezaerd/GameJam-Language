@@ -54,10 +54,6 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-      
-        
-
-
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -67,14 +63,14 @@ public class Controller : MonoBehaviour
         float moveDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // Apply Gravity
-        Gravity();
-
         // Jump
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
             Jump();
         else
             moveDirection.y = moveDirectionY;
+
+        if (!characterController.isGrounded)
+            moveDirection.y -= gravity * Time.deltaTime;
 
         // Move
         characterController.Move(moveDirection * Time.deltaTime);
@@ -84,12 +80,6 @@ public class Controller : MonoBehaviour
         {
             Rotate();
         }
-    }
-
-    private void Gravity()
-    {
-        if (!characterController.isGrounded)
-            moveDirection.y -= gravity * Time.deltaTime;
     }
 
     private void Jump()
@@ -112,13 +102,10 @@ public class Controller : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("startTimer"))
         {
-            //Debug.Log("Debut timer yo");
-            ///////////////////////////////     appliction.Loadscene ICI
+            Application.LoadLevel("MainMenu");
         }
         if (collider.gameObject.CompareTag("apple"))
         {
-            //Destroy(gameObject);
-            //Debug.Log("appleeee");
             appleCount++;
         }
 
