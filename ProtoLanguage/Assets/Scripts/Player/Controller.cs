@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class Controller : MonoBehaviour
 {
+    public GameObject startPos;
+    public Canvas timercolss;
+    public Text TimerText;
+    private bool isPlaying;
+    public int appleCount;
+
     public float walkSpeed = 6f;
     public float jumpSpeed = 8f;
 
@@ -32,8 +41,23 @@ public class Controller : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Awake()
+    {
+        transform.position = startPos.transform.position;
+        appleCount = 0;
+
+
+    }
+
+
+
+
     private void Update()
     {
+      
+        
+
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -81,4 +105,29 @@ public class Controller : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(-rotationX, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
     }
+
+
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("startTimer"))
+        {
+            //Debug.Log("Debut timer yo");
+            ///////////////////////////////     appliction.Loadscene ICI
+        }
+        if (collider.gameObject.CompareTag("apple"))
+        {
+            //Destroy(gameObject);
+            //Debug.Log("appleeee");
+            appleCount++;
+        }
+
+    }
+
+    public int GetApples()
+    {
+        return appleCount;
+    }
+
+   
 }
