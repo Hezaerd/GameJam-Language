@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour
     public float lookXLimit = 45f;
 
     public Camera playerCamera;
+    public AudioSource pickupSound;
 
     [HideInInspector]
     private bool canMove = true;
@@ -107,6 +108,7 @@ public class Controller : MonoBehaviour
         if (collider.gameObject.CompareTag("apple"))
         {
             appleCount++;
+            pickupSound.Play();
         }
 
     }
